@@ -1,0 +1,187 @@
+@use '../utilities/variables' as *;
+
+@keyframes loading-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.flip-card {
+  // Contenedor principal
+  perspective: 1200px;
+  height: 300px; // Altura fija para consistencia
+  
+  &__inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+  }
+
+  // Estado activo - rotación 3D
+  &--active &__inner {
+    transform: rotateY(180deg);
+  }
+
+  // Caras front/back compartidas
+  &__front,
+  &__back {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  &__front {
+    transform: rotateY(0deg) translateZ(1px);
+    z-index: 2;
+    background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+    
+    // Fallback si imagen falla
+    &:before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #f0f0f0;
+      z-index: 1;
+    }
+  }
+
+  &__back {
+    transform: rotateY(180deg) translateZ(1px);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+
+  // ===== IMAGEN FRONT =====
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    z-index: 2;
+
+    &.is-loaded {
+      opacity: 1;
+    }
+
+    // Placeholder shimmer mientras carga
+    &:not(.is-loaded) {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%) repeat-x;
+      background-size: 200% 100%;
+      animation: loading-shimmer 1.5s infinite;
+    }
+  }
+
+  // Nombre de ciudad (front)
+  &__city-name {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    color: white;
+    font-size: clamp(1.1rem, 4vw, 1.4rem);
+    font-weight: 700;
+    z-index: 3;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  }
+
+  // ===== CONTENIDO BACK (CLIMA) =====
+  &__temp-actual {
+    font-size: clamp(2rem, 8vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  &__estado {
+    font-size: 1rem;
+    text-transform: capitalize;
+    margin-bottom: 12px;
+    opacity: 0.95;
+  }
+
+  &__details {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin-bottom: auto;
+  }
+
+  // ===== ESTADOS DEL CLIMA =====
+  &__back--soleado {
+    background: linear-gradient(135deg, #facc15 0%, #f97316 50%, #eab308 100%);
+  }
+
+  &__back--lluvia {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #1e3a8a 100%);
+  }
+
+  &__back--nublado {
+    background: linear-gradient(135deg, #94a3b8 0%, #64748b 50%, #475569 100%);
+  }
+
+  // Botón detalles
+  .btn-detalles {
+    margin-top: auto;
+    background: rgba(255,255,255,0.95);
+    color: #1f2937;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    backdrop-filter: blur(10px);
+
+    &:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+      background: white;
+    }
+
+    &:active {
+      transform: translateY(0) scale(0.98);
+    }
+  }
+}
+
+// ===== RESPONSIVE =====
+@media (max-width: 768px) {
+  .flip-card {
+    &__inner {
+      height: 280px;
+    }
+    
+    &__city-name {
+      font-size: 1.1rem;
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .flip-card {
+    &__inner {
+      height: 260px;
+    }
+    
+    &__temp-actual {
+      font-size: 2.5rem;
+    }
+  }
+}

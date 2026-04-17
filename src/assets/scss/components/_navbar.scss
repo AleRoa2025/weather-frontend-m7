@@ -1,0 +1,135 @@
+@use '../utilities/variables' as *;
+
+.navbar {
+  background-color: #fdf8f5;
+  padding: 0.5rem 1rem;
+  position: relative;
+  min-height: 70px;
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem 5%;
+
+  // Collapse menu
+  .navbar-collapse {
+    flex-grow: 0;
+    background-color: #fdf8f5;
+    text-align: center;
+  }
+
+  // Logo
+  &__logo {
+    position: relative;
+    width: 110px;
+    z-index: 1050;
+
+    .navbar__image {
+      position: absolute;
+      top: -20px;
+      left: 0;
+      width: 100px;
+      height: 100px;
+      background: white;
+      border-radius: 20px;
+      padding: 5px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+
+      @media (max-width: 767px) {
+        width: 75px;
+        height: 75px;
+        top: -10px;
+        left: 5px;
+      }
+    }
+  }
+
+  // Menu principal
+  &__menu {
+    display: flex !important;
+    flex-direction: row !important;
+    list-style: none !important;
+    margin: 0;
+    padding: 0;
+    gap: 1rem;
+
+    @media (min-width: 768px) {
+      justify-content: flex-end;
+    }
+  }
+
+  &__item {
+    list-style: none;
+    margin: 0;
+  }
+
+  // Links
+  &__link {
+    text-decoration: none;
+    color: $color-dark;
+    font-weight: 500;
+    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    display: block; // Importante para Vue active states
+    width: auto; // Corregido
+
+    &--active {
+      
+      background: rgba(254, 207, 239, 0.5);
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(185, 29, 115, 0.3);  
+      color: #0d6efd !important;
+
+    }
+  }
+
+  // Toggler
+  .navbar-toggler {
+    border: none;
+    padding: 0.5rem;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  // Mobile
+  @media (max-width: 767px) {
+    .navbar-collapse {
+      background-color: #fdf8f5;
+      margin-top: 45px;
+      padding: 1.5rem;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      margin: 1rem 0;
+    }
+
+    &__menu {
+      flex-direction: column !important;
+      gap: 12px;
+    }
+
+    &__link {
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
+.navbar__link {
+  text-decoration: none;
+  color: #333;
+}
+.navbar__link--active {
+  font-weight: bold;
+  color: #0d6efd !important;
+}
+.navbar__image {
+  display: block;
+}
