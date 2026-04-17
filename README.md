@@ -17,11 +17,12 @@ Esta versión integra la gestión de estado global, navegación protegida y prue
 * **Sass / SCSS** (Arquitectura 7-1 y metodología BEM)
 * **Vitest** (Framework de pruebas unitarias)
 * **Bootstrap 5** (Base de estilos y componentes responsivos)
+  
 ![Sass](https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-2%20passed-brightgreen?style=for-the-badge&logo=vitest)
+
 
 ##  Instalación y Configuración
 
