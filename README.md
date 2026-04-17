@@ -1,5 +1,35 @@
-# Vue 3 + Vite
+# ☁️ International Weather App - Módulo VII
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Sétima entrega del proyecto desarrollado para el programa **Talento Digital para Chile**. Esta versión integra la gestión de estado global, navegación protegida y pruebas unitarias automatizadas.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## 🚀 Tecnologías Utilizadas
+
+* **Vue.js 3** (Composition API / SFC)
+* **Vuex** (Gestión de estado global para autenticación y favoritos) //Pendiente
+* **Vue Router** (Navegación entre Home, Contacto, Login y Favoritos)
+* **Vite** (Herramienta de construcción rápida)
+* **Sass / SCSS** (Arquitectura 7-1 y metodología BEM)
+* **Vitest** (Framework de pruebas unitarias)
+* **Bootstrap 5** (Base de estilos y componentes responsivos)
+
+## 🛠️ Instalación y Configuración
+
+Sigue estos pasos para ejecutar el proyecto localmente:
+
+1.  **Clonar el repositorio:**
+    ```bash
+    git clone [URL-DE-TU-REPOSITORIO]
+    ```
+
+2.  **Instalar dependencias:**
+    Entra a la carpeta del proyecto y ejecuta:
+    ```bash
+    npm install
+    ```
+
+## 💻 Comandos de la Terminal
+
+### Ejecutar en entorno de desarrollo
+Para ver la aplicación funcionando en el navegador (habitualmente en `http://localhost:5173`):
+```bash
+npm run dev
