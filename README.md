@@ -5,13 +5,13 @@
 ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
 ![Vitest](https://img.shields.io/badge/-Vitest-729B1B?style=for-the-badge&logo=vitest&logoColor=white)
 
-Séptima entrega del proyecto desarrollado para el programa **Talento Digital para Chile**- App Clima Internacional.
-Esta versión integra la gestión de estado global, navegación protegida y pruebas unitarias automatizadas.
+Avance de la séptima entrega del proyecto desarrollado para el programa **Talento Digital para Chile** y SENCE- App Clima Internacional.
+Esta versión integra la gestión de estado global, navegación protegida y pruebas unitarias automatizadas(avance entrega Final)
 
 ##  Tecnologías Utilizadas
 
 * **Vue.js 3** (Composition API / SFC)
-* **Vuex** (Gestión de estado global para autenticación y favoritos) //Pendiente
+* **Vuex** (Gestión de estado global para autenticación y favoritos) 
 * **Vue Router** (Navegación entre Home, Contacto, Login y Favoritos)
 * **Vite** (Herramienta de construcción rápida)
 * **Sass / SCSS** (Arquitectura 7-1 y metodología BEM)
