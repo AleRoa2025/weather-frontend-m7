@@ -13,18 +13,18 @@ Gracias a la implementación de Vuex, la app "reconoce" al usuario, permitiendo 
 
 Vistas y Rutas del SistemaLa navegación se gestiona con Vue Router 4, incorporando protecciones de acceso (Navigation Guards) para secciones privadas:
 
+* Login (/login): Formulario de acceso donde el usuario ingresa sus credenciales para iniciar sesión.
+* Registro (/registro): Vista opcional para la creación de nuevos usuarios simulados.
+* Home (/): Se mantienen las 10 capitales del mundo, flip cards que al girar muestran su T°actual y pronostico de 5 días, incluyendo minimo y maximo, humedad, viento y presion atmosferica.
+* Detalle de Lugar (/lugar/:id): Información técnica detallada y pronóstico extendido. Presionando boton "ver detalles" al girar la flip card.
+* Favoritos (/favoritos): (Ruta Protegida) Sección exclusiva para usuarios autenticados donde se listan sus ciudades preferidas.
+* Contacto: Formulario de consultas con validaciones integradas.
 
-# Login (/login): Formulario de acceso donde el usuario ingresa sus credenciales para iniciar sesión.
-# Registro (/registro): Vista opcional para la creación de nuevos usuarios simulados.
-# Home (/): Se mantienen las 10 capitales del mundo, flip cards que al girar muestran su T°actual y pronostico de 5 días, incluyendo minimo y maximo, humedad, viento y presion atmosferica.
-# Detalle de Lugar (/lugar/:id): Información técnica detallada y pronóstico extendido. Presionando boton "ver detalles" al girar la flip card.
-# Favoritos (/favoritos): (Ruta Protegida) Sección exclusiva para usuarios autenticados donde se listan sus ciudades preferidas.
-# Contacto: Formulario de consultas con validaciones integradas.
-
-## Gestión de Estado Global (Vuex)Se ha implementado un Store centralizado para manejar de forma consistente la información que fluye por la aplicación:
-# Autenticación: Un estado global (isAuthenticated) y un objeto user que almacena el nombre, email y perfil de la persona conectada.
-# Persistencia y Limpieza: Al iniciar sesión, los datos se cargan en el estado; al utilizar la función de Cerrar Sesión, el estado de Vuex se limpia por completo y se redirige al usuario a la vista pública.
-# Personalización: Las preferencias del usuario (C° o F°) se leen directamente desde el Store, ajustando la interfaz de manera dinámica
+# Gestión de Estado Global (Vuex)
+Se ha implementado un Store centralizado para manejar de forma consistente la información que fluye por la aplicación:
+* Autenticación: Un estado global (isAuthenticated) y un objeto user que almacena el nombre, email y perfil de la persona conectada.
+* Persistencia y Limpieza: Al iniciar sesión, los datos se cargan en el estado; al utilizar la función de Cerrar Sesión, el estado de Vuex se limpia por completo y se redirige al usuario a la vista pública.
+*  Personalización: Las preferencias del usuario (C° o F°) se leen directamente desde el Store, ajustando la interfaz de manera dinámica
 
 ##  Tecnologías Utilizadas
 
