@@ -1,51 +1,100 @@
 
-// Colores
-$color-primary: #0d6efd;
-$color-secondary:  #e3f2fd;
-$color-dark: black;
-$color-light: #ffffff;
-$color-bg: #f5f1e8;
-$primary-color: #0d6efd;
+$primary: #0d6efd;
+$primary-dark: #0b5ed7;
+$primary-light: #cfe2ff;
 
-$text-dark: #212529;
+// Colores semánticos
+$success: #198754;
+$danger: #dc3545;
+$warning: #ffc107;
+$info: #0dcaf0;
 
+// Texto
+$text-dark: #1f3a5f;        // Títulos, encabezados
+$text-body: #212529;        // Cuerpo de texto (Bootstrap default)
+$text-muted: #6c757d;       // Texto secundario, placeholders
 
-$font-family: Helvetica, Arial, sans-serif;
+// Fondos
+$bg-light: #f8f9fa;         // Secciones claras (Bootstrap bg-light)
+$bg-card: #ffffff;          // Cards, formularios, modales
+$bg-gradient-light: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%); // Uso específico
 
-// Tamaños
-$radius-sm: 10px;
-$radius-md: 20px;
+// Bordes
+$border-light: #ced4da;
+$border-subtle: rgba(0, 0, 0, 0.08);
 
-// Transiciones
-$transition-fast: 0.3s;
-$transition-normal: 0.6s;
+// ============================================
+// 🌤 ICONOS DE CLIMA - Colores temáticos
+// ============================================
+// Nota: Estos van en un archivo separado `_weather-icons.scss`
+// Pero si los mantienes aquí, al menos organízalos:
 
-// Z-index
-$z-btn-top: 1000;
+$icon-sun: #fbbc05;
+$icon-sun-alt: #fcba06;
+$icon-cloud: #80acc4;
+$icon-cloud-sun: #f3d584;
+$icon-rain: #72bce0;
+$icon-rain-heavy: #4fc3f7;
+$icon-arrow-up: #5188b4;
 
-//color iconos clima
+// ============================================
+// 🎭 SOMBRAS - Sistema consistente
+// ============================================
 
-.fa-sun {
-  color: #fbbc05;
-  font-size: medium;
-}
+$shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+$shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
+$shadow-lg: 0 0.75rem 2rem rgba(0, 0, 0, 0.12);
+$shadow-card: 0 8px 30px rgba(31, 58, 95, 0.12);
+$shadow-card-hover: 0 1rem 3rem rgba(31, 58, 95, 0.15);
 
-.fa-cloud-rain,
-.fa-cloud-showers-heavy {
-  color: #4fc3f7;
-}
+// Focus rings (accesibilidad)
+$focus-ring-primary: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+$focus-ring-danger: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
 
-.fa-cloud,
-.fa-cloud-sun {
-  color: #90a4ae;
-}
+// ============================================
+// 📐 ESPACIADO Y DIMENSIONES
+// ============================================
 
-.fa-sun { color: #fcba06; }
-.fa-cloud {color: #80acc4; }
-.fa-cloud-sun {color:#f3d584 }
+$radius-sm: 0.5rem;    // 8px - botones pequeños, badges
+$radius-md: 1rem;      // 16px - cards, inputs
+$radius-lg: 1.5rem;    // 24px - modales, contenedores
 
-.fa-cloud-rain,
-.fa-cloud-showers-heavy,
-.fa-cloud-sun-rain { color: #72bce0; }
-.fa-arrow-up{ color:#5188b4;
-}
+$spacing-xs: 0.25rem;  // 4px
+$spacing-sm: 0.5rem;   // 8px
+$spacing-md: 1rem;     // 16px
+$spacing-lg: 1.5rem;   // 24px
+$spacing-xl: 3rem;     // 48px
+
+// ============================================
+// ⚡ TRANSICIONES Y ANIMACIONES
+// ============================================
+
+$transition-fast: 0.15s ease-in-out;    // Hover, focus
+$transition-normal: 0.3s ease;          // Cards, modales
+$transition-slow: 0.6s ease;            // Entradas de página
+
+// ============================================
+// 🧭 Z-INDEX - Capas ordenadas
+// ============================================
+
+$z-dropdown: 1000;
+$z-sticky: 1020;
+$z-fixed: 1030;
+$z-modal-backdrop: 1040;
+$z-modal: 1050;
+$z-popover: 1060;
+$z-tooltip: 1070;
+$z-btn-top: 1080;  // Botón "volver arriba"
+
+// ============================================
+// 🔤 TIPOGRAFÍA
+// ============================================
+
+$font-family-base: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+$font-size-sm: 0.875rem;   // 14px
+$font-size-base: 1rem;     // 16px
+$font-size-lg: 1.25rem;    // 20px

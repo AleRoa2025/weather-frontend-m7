@@ -1,0 +1,55 @@
+@use '../utilities/variables' as *;
+
+.fa-sun {
+  color: $icon-sun;
+  font-size: 1.5rem;
+  transition: transform $transition-fast;
+  
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+// Nubes
+.fa-cloud,
+.fa-cloud-sun {
+  color: $icon-cloud;
+}
+
+.fa-cloud-sun {
+  color: $icon-cloud-sun;
+}
+
+// Lluvia
+.fa-cloud-rain,
+.fa-cloud-showers-heavy,
+.fa-cloud-sun-rain {
+  color: $icon-rain;
+}
+
+.fa-cloud-showers-heavy {
+  color: $icon-rain-heavy;
+}
+
+// Utilitarios
+.fa-arrow-up {
+  color: $icon-arrow-up;
+}
+
+// Animación sutil para iconos en pronóstico
+.detalle__dia-icono i {
+  display: inline-block;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+// Modo oscuro (opcional - futuro)
+@media (prefers-color-scheme: dark) {
+  .fa-sun { color: lighten($icon-sun, 10%); }
+  .fa-cloud { color: lighten($icon-cloud, 15%); }
+  .fa-cloud-rain { color: lighten($icon-rain, 10%); }
+}

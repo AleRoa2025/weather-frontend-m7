@@ -1,8 +1,45 @@
-@use '../utilities/variables' as *;
+@use "../utilities/variables" as *;
 
 .container {
-    .row {
-      justify-content: center;
+  .row {
+    justify-content: center;
+  }
+}
+
+.home-search {
+  .input-group {
+    box-shadow: $shadow-sm;
+    border-radius: $radius-md;
+    overflow: hidden;
+    border: 1px solid $border-light;
+    transition: box-shadow $transition-fast;
+
+    &:focus-within {
+      box-shadow: $focus-ring-primary;
+      border-color: $primary;
     }
   }
-  
+
+  .form-control {
+    border: none;
+    padding: $spacing-md;
+    font-size: $font-size-base;
+
+    &::placeholder {
+      color: $text-muted;
+    }
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, $primary 0%, $primary-dark 100%);
+    border: none;
+    padding: $spacing-md $spacing-lg;
+    font-weight: $font-weight-medium;
+    transition: all $transition-fast;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 $spacing-sm $spacing-md rgba($primary, 0.3);
+    }
+  }
+}

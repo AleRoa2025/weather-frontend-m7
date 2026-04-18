@@ -1,135 +1,285 @@
 @use '../utilities/variables' as *;
 
-.navbar {
-  background-color: #fdf8f5;
-  padding: 0.5rem 1rem;
-  position: relative;
-  min-height: 70px;
-  display: flex !important;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 1rem 5%;
 
-  // Collapse menu
-  .navbar-collapse {
-    flex-grow: 0;
-    background-color: #fdf8f5;
-    text-align: center;
+
+.navbar {
+  // Refuerzo de variables Bootstrap con nuestro sistema
+  background-color: $bg-light !important;
+  border-bottom: 1px solid $border-subtle;
+  padding: $spacing-sm $spacing-md;
+  min-height: 70px;
+  z-index: $z-sticky;
+
+  // Contenedor fluido - ajuste de padding
+  .container-fluid {
+    padding: 0 $spacing-md;
   }
 
-  // Logo
+  // ============================================
+  // 🖼 LOGO PERSONALIZADO
+  // ============================================
   &__logo {
-    position: relative;
-    width: 110px;
-    z-index: 1050;
+    display: flex;
+    align-items: center;
+    z-index: $z-dropdown;
+    margin-right: $spacing-lg;
 
     .navbar__image {
-      position: absolute;
-      top: -20px;
-      left: 0;
       width: 100px;
       height: 100px;
-      background: white;
-      border-radius: 20px;
-      padding: 5px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
+      background: $bg-card;
+      border-radius: $radius-md;
+      padding: $spacing-xs;
+      box-shadow: $shadow;
+      transition: transform $transition-normal, box-shadow $transition-normal;
+      object-fit: contain;
+      // Eliminar el top negativo frágil, usar margen controlado
+      margin-top: $spacing-xs;
 
       &:hover {
         transform: scale(1.05);
+        box-shadow: $shadow-lg;
       }
 
       @media (max-width: 767px) {
         width: 75px;
         height: 75px;
-        top: -10px;
-        left: 5px;
+        margin-top: 0;
       }
     }
   }
 
-  // Menu principal
+  // ============================================
+  // 🔗 LINKS DEL MENÚ (BEM sobre Bootstrap)
+  // ============================================
   &__menu {
-    display: flex !important;
-    flex-direction: row !important;
-    list-style: none !important;
-    margin: 0;
-    padding: 0;
-    gap: 1rem;
+    // Bootstrap ya maneja display/flex, solo ajustamos gap
+    gap: $spacing-sm !important;
 
-    @media (min-width: 768px) {
-      justify-content: flex-end;
+    @media (max-width: 767px) {
+      gap: $spacing-xs !important;
+      padding-top: $spacing-md;
     }
   }
 
   &__item {
-    list-style: none;
+    // Reset de estilos de lista (Bootstrap ya lo hace, pero por seguridad)
     margin: 0;
   }
 
-  // Links
   &__link {
-    text-decoration: none;
-    color: $color-dark;
-    font-weight: 500;
-    padding: 0.6rem 1.2rem;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    display: block; // Importante para Vue active states
-    width: auto; // Corregido
+    // Base: hereda de Bootstrap .nav-link, añadimos personalizaciones
+    font-weight: $font-weight-medium;
+    padding: $spacing-xs $spacing-md !important;
+    border-radius: $radius-sm;
+    transition: all $transition-fast;
+    position: relative;
+    // En navbar.scss, dentro de &__link
+&--new {
+  &::before {
+    content: '•';
+    color: $danger;
+    font-weight: bold;
+    margin-right: $spacing-xs;
+    animation: pulse 2s infinite;
+  }
+}
 
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+    // Hover suave
+    &:hover {
+      color: $primary !important;
+      background-color: rgba($primary, 0.08);
+    }
+
+    // Accesibilidad: focus visible
+    &:focus {
+      outline: none;
+      box-shadow: $focus-ring-primary;
+    }
+
+    // Estado activo (Vue Router active-class)
     &--active {
-      
-      background: rgba(254, 207, 239, 0.5);
-      font-weight: 700;
-      box-shadow: 0 4px 12px rgba(185, 29, 115, 0.3);  
-      color: #0d6efd !important;
+      font-weight: $font-weight-bold !important;
+      color: $primary !important;
+      background: $primary-light;
+      box-shadow: 0 $spacing-xs $spacing-sm rgba($primary, 0.2);
 
+      &::after {
+        // Indicador visual sutil debajo del link activo
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 70%;
+        height: 2px;
+        background: $primary;
+        border-radius: 2px;
+      }
+
+      &:hover {
+        background: lighten($primary-light, 3%);
+      }
     }
   }
 
-  // Toggler
+  // ============================================
+  // 👤 INFO DE USUARIO (cuando está autenticado)
+  // ============================================
+  .nav-user {
+    color: $text-muted;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    padding: $spacing-xs $spacing-sm;
+    background: rgba($primary, 0.05);
+    border-radius: $radius-sm;
+
+    i {
+      color: $primary;
+      font-size: $font-size-lg;
+    }
+
+    @media (max-width: 767px) {
+      justify-content: center;
+      margin-bottom: $spacing-sm;
+    }
+  }
+
+  // ============================================
+  // 🔘 BOTÓN TOGGLER (MÓVIL)
+  // ============================================
   .navbar-toggler {
-    border: none;
-    padding: 0.5rem;
+    border: none !important;
+    padding: $spacing-xs;
+    transition: transform $transition-fast;
 
     &:focus {
-      box-shadow: none;
+      box-shadow: none !important;
+      outline: 2px solid $primary;
+      outline-offset: 2px;
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    // Personalizar el ícono hamburguesa para que coincida con $text-dark
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='#{urlencode($text-dark)}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
     }
   }
 
-  // Mobile
+  // ============================================
+  // 📱 RESPONSIVE - Mobile First
+  // ============================================
   @media (max-width: 767px) {
-    .navbar-collapse {
-      background-color: #fdf8f5;
-      margin-top: 45px;
-      padding: 1.5rem;
-      border-radius: 15px;
-      text-align: center;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      margin: 1rem 0;
-    }
+    padding: $spacing-xs $spacing-sm;
 
-    &__menu {
-      flex-direction: column !important;
-      gap: 12px;
+    .navbar-collapse {
+      background: $bg-card;
+      border-radius: $radius-md;
+      box-shadow: $shadow-lg;
+      margin-top: $spacing-md;
+      padding: $spacing-lg;
+      border: 1px solid $border-subtle;
+
+      &.show {
+        animation: slideDown $transition-normal ease;
+      }
     }
 
     &__link {
-      width: 100%;
       text-align: center;
+      padding: $spacing-sm $spacing-lg !important;
+      border-radius: $radius-sm;
+
+      &--active::after {
+        bottom: 5px; // Ajustar indicador en móvil
+      }
     }
   }
 }
-.navbar__link {
-  text-decoration: none;
-  color: #333;
+
+// ============================================
+// ✨ ANIMACIÓN PARA COLLAPSE MOBILE
+// ============================================
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-.navbar__link--active {
-  font-weight: bold;
-  color: #0d6efd !important;
+
+// ============================================
+// 🌙 MODO OSCURO (opcional - futuro)
+// ============================================
+@media (prefers-color-scheme: dark) {
+  .navbar {
+    background-color: darken($bg-light, 12%) !important;
+    border-bottom-color: lighten($border-subtle, 10%);
+
+    &__logo .navbar__image {
+      background: darken($bg-card, 8%);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    &__link {
+      color: lighten($text-dark, 25%) !important;
+
+      &:hover {
+        color: lighten($primary, 10%) !important;
+        background-color: rgba($primary, 0.15);
+      }
+
+      &--active {
+        background: rgba($primary, 0.2);
+        color: lighten($primary, 15%) !important;
+
+        &::after {
+          background: lighten($primary, 10%);
+        }
+      }
+    }
+
+    .nav-user {
+      background: rgba($primary, 0.1);
+      color: lighten($text-muted, 15%);
+
+      i {
+        color: lighten($primary, 10%);
+      }
+    }
+
+    .navbar-toggler .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='#{urlencode(lighten($text-dark, 25%))}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+  }
 }
-.navbar__image {
-  display: block;
+
+// ============================================
+// ♿ ACCESIBILIDAD - Reduced Motion
+// ============================================
+@media (prefers-reduced-motion: reduce) {
+  .navbar__image,
+  .navbar__link,
+  .navbar-toggler {
+    transition: none !important;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
 }

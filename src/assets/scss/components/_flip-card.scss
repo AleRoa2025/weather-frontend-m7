@@ -1,187 +1,317 @@
 @use '../utilities/variables' as *;
 
-@keyframes loading-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
+
 
 .flip-card {
-  // Contenedor principal
-  perspective: 1200px;
-  height: 300px; // Altura fija para consistencia
-  
-  &__inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+  perspective: 1000px;
+  cursor: pointer;
+  height: 320px; // Altura fija para consistencia
+  border-radius: $radius-md;
+  box-shadow: $shadow;
+  transition: box-shadow $transition-normal, transform $transition-fast;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+    transform: translateY(-4px);
   }
 
-  // Estado activo - rotación 3D
-  &--active &__inner {
+  &:focus {
+    outline: none;
+    box-shadow: $focus-ring-primary;
+  }
+
+  &--active .flip-card__inner {
     transform: rotateY(180deg);
   }
 
-  // Caras front/back compartidas
-  &__front,
-  &__back {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 16px;
-    overflow: hidden;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-  }
-
-  &__front {
-    transform: rotateY(0deg) translateZ(1px);
-    z-index: 2;
-    background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
-    
-    // Fallback si imagen falla
-    &:before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: #f0f0f0;
-      z-index: 1;
+  @media (prefers-reduced-motion: reduce) {
+    &, &__inner {
+      transition: none !important;
+      transform: none !important;
+    }
+    &:hover {
+      transform: none;
     }
   }
+}
 
-  &__back {
-    transform: rotateY(180deg) translateZ(1px);
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    color: white;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+.flip-card__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform $transition-normal;
+  transform-style: preserve-3d;
+  border-radius: $radius-md;
+  overflow: hidden;
+}
+
+// ============================================
+// 🖼 CARA FRONTAL - Imagen + Overlay
+// ============================================
+.flip-card__front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: $radius-md;
+  overflow: hidden;
+}
+
+.flip-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity $transition-normal;
+  transform: scale(1.02); // Prevenir bordes blancos en zoom
+
+  &.is-loaded {
+    opacity: 1;
   }
 
-  // ===== IMAGEN FRONT =====
-  &__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 0.8s ease-in-out;
-    z-index: 2;
+  // Placeholder mientras carga (opcional)
+  &:not(.is-loaded) {
+    background: linear-gradient(135deg, $bg-light 0%, darken($bg-light, 5%) 100%);
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+}
 
-    &.is-loaded {
-      opacity: 1;
-    }
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.8; }
+}
 
-    // Placeholder shimmer mientras carga
-    &:not(.is-loaded) {
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%) repeat-x;
-      background-size: 200% 100%;
-      animation: loading-shimmer 1.5s infinite;
-    }
+.flip-card__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: $spacing-lg $spacing-md;
+  background: linear-gradient(
+    to top,
+    rgba($text-dark, 0.85) 0%,
+    rgba($text-dark, 0.4) 60%,
+    transparent 100%
+  );
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.flip-card__city-name {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  letter-spacing: 0.5px;
+  display: block;
+}
+
+// ============================================
+// 🌤 CARA TRASERA - Información del clima
+// ============================================
+.flip-card__back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+  border-radius: $radius-md;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: $text-dark;
+  background: $bg-card;
+  padding: $spacing-md;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05);
+
+  // Gradientes por estado climático (usando variables unificadas)
+  &--soleado {
+    background: linear-gradient(135deg, #fff9e6 0%, #ffecb3 100%);
+    color: darken($icon-sun, 20%);
   }
 
-  // Nombre de ciudad (front)
-  &__city-name {
-    position: absolute;
-    bottom: 16px;
-    left: 16px;
-    right: 16px;
-    color: white;
-    font-size: clamp(1.1rem, 4vw, 1.4rem);
-    font-weight: 700;
-    z-index: 3;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  &--lluvia {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    color: darken($icon-rain, 15%);
   }
 
-  // ===== CONTENIDO BACK (CLIMA) =====
-  &__temp-actual {
-    font-size: clamp(2rem, 8vw, 3.5rem);
-    font-weight: 800;
-    line-height: 1;
-    margin-bottom: 4px;
+  &--nublado {
+    background: linear-gradient(135deg, #eceff1 0%, #cfd8dc 100%);
+    color: darken($icon-cloud, 10%);
   }
 
-  &__estado {
-    font-size: 1rem;
-    text-transform: capitalize;
-    margin-bottom: 12px;
-    opacity: 0.95;
+  // Fallback para cualquier otro estado
+  &:not(&--soleado):not(&--lluvia):not(&--nublado) {
+    background: linear-gradient(135deg, $bg-card 0%, $bg-light 100%);
+  }
+}
+
+.flip-card__temp-actual {
+  font-size: 2.5rem;
+  font-weight: $font-weight-bold;
+  color: inherit;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  margin-bottom: $spacing-xs;
+}
+
+.flip-card__estado {
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  color: inherit;
+  text-transform: capitalize;
+  margin-bottom: $spacing-md;
+  opacity: 0.9;
+}
+
+.flip-card__back hr {
+  border-color: currentColor;
+  opacity: 0.2;
+  margin: $spacing-md 0;
+  width: 80%;
+}
+
+.flip-card__back p {
+  font-size: $font-size-sm;
+  color: inherit;
+  opacity: 0.85;
+  line-height: 1.6;
+  margin-bottom: $spacing-lg !important;
+}
+
+// Botón "Ver detalles"
+.flip-card__back .btn-light {
+  background: rgba($bg-card, 0.9);
+  border: 1px solid $border-light;
+  color: $text-dark;
+  font-weight: $font-weight-medium;
+  transition: all $transition-fast;
+
+  &:hover {
+    background: $primary;
+    color: #fff;
+    border-color: $primary;
+    transform: translateY(-1px);
+    box-shadow: 0 $spacing-xs $spacing-sm rgba($primary, 0.3);
+  }
+}
+
+// ============================================
+// 📱 RESPONSIVE - Ajustes por breakpoint
+// ============================================
+@media (max-width: 991px) {
+  .flip-card {
+    height: 300px;
   }
 
-  &__details {
-    font-size: 0.85rem;
-    opacity: 0.9;
-    margin-bottom: auto;
+  .flip-card__temp-actual {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .flip-card {
+    height: 280px;
+    margin-bottom: $spacing-md;
   }
 
-  // ===== ESTADOS DEL CLIMA =====
-  &__back--soleado {
-    background: linear-gradient(135deg, #facc15 0%, #f97316 50%, #eab308 100%);
+  .flip-card__city-name {
+    font-size: $font-size-base;
   }
 
-  &__back--lluvia {
-    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #1e3a8a 100%);
+  .flip-card__temp-actual {
+    font-size: 1.75rem;
   }
 
-  &__back--nublado {
-    background: linear-gradient(135deg, #94a3b8 0%, #64748b 50%, #475569 100%);
+  .flip-card__overlay {
+    padding: $spacing-md;
+  }
+}
+
+@media (max-width: 575px) {
+  .flip-card {
+    height: 260px;
   }
 
-  // Botón detalles
-  .btn-detalles {
-    margin-top: auto;
-    background: rgba(255,255,255,0.95);
-    color: #1f2937;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    backdrop-filter: blur(10px);
+  .flip-card__back {
+    padding: $spacing-sm;
+  }
+
+  .flip-card__temp-actual {
+    font-size: 1.5rem;
+  }
+
+  .flip-card__estado {
+    font-size: $font-size-sm;
+  }
+}
+
+
+
+// ============================================
+// 🌙 MODO OSCURO (opcional - futuro)
+// ============================================
+@media (prefers-color-scheme: dark) {
+  .flip-card {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
 
     &:hover {
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-      background: white;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  .flip-card__back {
+    background: darken($bg-card, 8%);
+    color: lighten($text-dark, 20%);
+
+    &--soleado {
+      background: linear-gradient(135deg, darken(#fff9e6, 15%) 0%, darken(#ffecb3, 15%) 100%);
     }
 
-    &:active {
-      transform: translateY(0) scale(0.98);
+    &--lluvia {
+      background: linear-gradient(135deg, darken(#e3f2fd, 20%) 0%, darken(#bbdefb, 20%) 100%);
     }
+
+    &--nublado {
+      background: linear-gradient(135deg, darken(#eceff1, 15%) 0%, darken(#cfd8dc, 15%) 100%);
+    }
+  }
+
+  .flip-card__back .btn-light {
+    background: darken($bg-card, 5%);
+    border-color: lighten($border-light, 10%);
+    color: lighten($text-dark, 15%);
+
+    &:hover {
+      background: lighten($primary, 10%);
+      color: #fff;
+    }
+  }
+
+  .home-search .input-group {
+    background: darken($bg-card, 5%);
+    border-color: lighten($border-light, 10%);
   }
 }
 
-// ===== RESPONSIVE =====
-@media (max-width: 768px) {
-  .flip-card {
-    &__inner {
-      height: 280px;
-    }
-    
-    &__city-name {
-      font-size: 1.1rem;
-      bottom: 12px;
-      left: 12px;
-      right: 12px;
-    }
+// ============================================
+// ♿ ACCESIBILIDAD - Focus visible
+// ============================================
+.flip-card:focus-visible {
+  outline: 3px solid $primary;
+  outline-offset: 3px;
+}
+
+// Loading state para cards mientras se cargan datos
+.flip-card--loading {
+  .flip-card__front {
+    background: linear-gradient(90deg, $bg-light 25%, darken($bg-light, 3%) 50%, $bg-light 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
   }
 }
 
-@media (max-width: 576px) {
-  .flip-card {
-    &__inner {
-      height: 260px;
-    }
-    
-    &__temp-actual {
-      font-size: 2.5rem;
-    }
-  }
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }

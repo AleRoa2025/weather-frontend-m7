@@ -1,7 +1,7 @@
 @use '../utilities/variables' as *;
 
 body {
-  background-color: $color-bg;
+  background-color: $bg-light
 
   }
   
@@ -13,8 +13,4 @@ body {
 
 body {
   transform: none !important;
-}
-body {
-  transform: none !important;
-  perspective: none !important;
 }

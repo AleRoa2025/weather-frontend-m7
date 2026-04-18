@@ -1,64 +1,198 @@
+@use '../utilities/variables' as *;
+
+
 .contact {
-    background-color: #f5efe6;
-    padding: 3rem 1rem;
-    margin-top: 5px;
-  
-    &__container {
-      max-width: 700px;
-      margin: 0 auto;
-      background-color: #ffffff;
-      padding: 2.5rem;
-      border-radius: 1rem;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    }
-  
-    &__title {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: #1f3a5f;
-      text-align: center;
-    }
-  
-    &__description {
-      text-align: center;
-      margin-bottom: 2rem;
-      color: #555;
-    }
-  
-    &__form {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-    }
-  
-    &__field {
-      display: flex;
-      flex-direction: column;
-    }
-  
-    &__label {
-      font-weight: 600;
-      margin-bottom: 0.3rem;
-    }
-  
-    &__input,
-    &__textarea {
-      padding: 0.6rem;
-      border-radius: 0.5rem;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-    }
-  
-    &__textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
-  
-    &__button {
-      margin-top: 1rem;
-      align-self: center;
-      padding: 0.6rem 2rem;
-      font-size: 1rem;
+  background-color: $bg-light;
+
+  min-height: auto;
+
+  &__form {
+    background: $bg-card;
+    border-radius: $radius-md;
+    border: 1px solid $border-subtle;
+    box-shadow: $shadow;
+
+    &:hover {
+      box-shadow: $shadow-lg;
+      transition: box-shadow $transition-fast;
     }
   }
-  
+
+  &__title {
+    color: $text-dark;
+    font-weight: $font-weight-bold;
+  }
+
+  &__description {
+    color: $text-muted;
+    font-size: $font-size-lg;
+  }
+
+  &__field {
+    margin-bottom: $spacing-lg;
+  }
+
+  &__input,
+  &__textarea {
+    padding: $spacing-md;
+    border: 1px solid $border-light;
+    border-radius: $radius-sm;
+    font-size: $font-size-base;
+    background-color: $bg-card;
+    transition: border-color $transition-fast, box-shadow $transition-fast;
+
+    &:focus {
+      border-color: $primary;
+      box-shadow: $focus-ring-primary;
+      outline: 0;
+    }
+
+    &.is-invalid {
+      border-color: $danger;
+      background-color: $bg-card;
+
+      &:focus {
+        box-shadow: $focus-ring-danger;
+      }
+    }
+
+    &::placeholder {
+      color: lighten($text-muted, 15%);
+      opacity: 1;
+    }
+  }
+
+  &__textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.5;
+  }
+
+  &__button {
+    background: linear-gradient(135deg, $primary 0%, $primary-dark 100%);
+    border: none;
+    font-weight: $font-weight-medium;
+    transition: all $transition-fast;
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, $primary-dark 0%, darken($primary-dark, 3%) 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 $spacing-sm $spacing-md rgba($primary, 0.3);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    &:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// ============================================
+// 📢 ALERTAS - Estados de éxito/error
+// ============================================
+.contact__alert {
+  border-radius: $radius-sm;
+  padding: $spacing-md;
+  font-size: $font-size-base;
+
+  &--success {
+    background-color: lighten($success, 35%);
+    border: 1px solid lighten($success, 25%);
+    color: darken($success, 25%);
+  }
+
+  &--error {
+    background-color: lighten($danger, 35%);
+    border: 1px solid lighten($danger, 25%);
+    color: darken($danger, 25%);
+  }
+}
+
+// ============================================
+// 📱 RESPONSIVE - Breakpoints Bootstrap
+// ============================================
+@media (max-width: 767.98px) {
+  .contact {
+    padding: $spacing-lg $spacing-md;
+
+    &__form {
+      padding: $spacing-lg !important;
+    }
+
+    &__title {
+      font-size: 1.75rem;
+    }
+
+    &__input,
+    &__textarea {
+      font-size: $font-size-sm; // Prevenir zoom en iOS
+    }
+  }
+}
+
+// ============================================
+// ♿ ACCESIBILIDAD - Reduced motion
+// ============================================
+@media (prefers-reduced-motion: reduce) {
+  .contact__button,
+  .contact__input,
+  .contact__textarea {
+    transition: none;
+  }
+
+  .contact__form:hover {
+    box-shadow: $shadow; // Sin cambio en hover
+  }
+}
+
+// ============================================
+// 🎨 MODO OSCURO (opcional - futuro)
+// ============================================
+@media (prefers-color-scheme: dark) {
+  .contact {
+    background-color: darken($bg-light, 10%);
+
+    &__form {
+      background: darken($bg-card, 5%);
+      border-color: lighten($border-subtle, 10%);
+      box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.3);
+    }
+
+    &__title {
+      color: lighten($text-dark, 20%);
+    }
+
+    &__description {
+      color: lighten($text-muted, 10%);
+    }
+
+    &__input,
+    &__textarea {
+      background-color: darken($bg-card, 3%);
+      border-color: lighten($border-light, 10%);
+      color: lighten($text-body, 10%);
+
+      &::placeholder {
+        color: lighten($text-muted, 5%);
+      }
+
+      &:focus {
+        border-color: lighten($primary, 10%);
+        box-shadow: 0 0 0 0.25rem rgba($primary, 0.4);
+      }
+    }
+
+    &__button {
+      background: linear-gradient(135deg, lighten($primary, 5%) 0%, $primary 100%);
+
+      &:hover:not(:disabled) {
+        box-shadow: 0 $spacing-sm $spacing-md rgba($primary, 0.5);
+      }
+    }
+  }
+}
