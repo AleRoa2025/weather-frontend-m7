@@ -4,7 +4,8 @@
 ![Vue Router](https://img.shields.io/badge/vue%20router-%2342b883.svg?style=for-the-badge&logo=vue.js&logoColor=white)
 ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
 ![Vitest](https://img.shields.io/badge/-Vitest-729B1B?style=for-the-badge&logo=vitest&logoColor=white)
-'''
+
+
 App Clima-International Weather evoluciona en esta entrega para convertirse en una plataforma personalizada. 
 Además de mostrar el clima mundial y pronósticos de 5 días mediante la API de OpenWeatherMap, la aplicación ahora incorpora 
 un sistema de autenticación y gestión de estado global. 
@@ -55,7 +56,7 @@ Sigue estos pasos para ejecutar el proyecto localmente:
     Entra a la carpeta del proyecto y ejecuta:
     ```bash
     npm install
-    ```
+ 
 ##  Comandos de la Terminal
 
 ### Ejecutar en entorno de desarrollo
