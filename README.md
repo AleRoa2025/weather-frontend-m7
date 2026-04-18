@@ -8,7 +8,7 @@
 ______________________________________________________________________________________________________________________
 
 
-'App Clima-International Weather evoluciona en esta entrega para convertirse en una plataforma personalizada. 
+App Clima-International Weather evoluciona en esta entrega para convertirse en una plataforma personalizada. 
 Además de mostrar el clima mundial y pronósticos de 5 días mediante la API de OpenWeatherMap, la aplicación ahora incorpora 
 un sistema de autenticación y gestión de estado global. 
 
